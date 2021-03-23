@@ -79,7 +79,6 @@ namespace FireImprovements
         }
         //* Fuel.
         internal static Comparison<GearItem> FuelBurnDurationComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDuration);
-        internal static Comparison<GearItem> FuelBurnDurationReverseComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDurationReverse);
         internal static Comparison<GearItem> FuelIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelIgniteChance);
         internal static Comparison<GearItem> FuelBurnDurationAndIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDurationAndIgniteChance);
 
@@ -208,11 +207,11 @@ namespace FireImprovements
         }
         public static int CompareFireStartersTorchesFlaresFirst(GearItem g1, GearItem g2)
         {
-            if (g1.m_TorchItem && !g2.m_TorchItem)
+            if ((g1.m_TorchItem && !g2.m_TorchItem) || (g1.m_FlareItem && !g2.m_FlareItem))
             {
                 return -1;
             }
-            if (!g1.m_TorchItem && g2.m_TorchItem)
+            if ((!g1.m_TorchItem && g2.m_TorchItem) || (!g1.m_FlareItem && g2.m_FlareItem))
             {
                 return 1;
             }
@@ -247,20 +246,6 @@ namespace FireImprovements
             return 0;
         }
         public static int CompareFuelBurnDuration(GearItem g1, GearItem g2)
-        {
-            float g1_burnDuration = g1.GetComponent<FuelSourceItem>().m_BurnDurationHours;
-            float g2_burnDuration = g2.GetComponent<FuelSourceItem>().m_BurnDurationHours;
-            if (g1_burnDuration < g2_burnDuration)
-            {
-                return -1; //g1 to the front
-            }
-            else if (g1_burnDuration > g2_burnDuration)
-            {
-                return 1; //g1 to the back
-            }
-            return 0;
-        }
-        public static int CompareFuelBurnDurationReverse(GearItem g1, GearItem g2)
         {
             float g1_burnDuration = g1.GetComponent<FuelSourceItem>().m_BurnDurationHours;
             float g2_burnDuration = g2.GetComponent<FuelSourceItem>().m_BurnDurationHours;

@@ -1,4 +1,4 @@
-# Weapon Improvements for *The Long Dark*
+# Fire Improvements for *The Long Dark*
 
 This is a mod for **The Long Dark** by Hinterland Studio, Inc.
 
@@ -9,7 +9,7 @@ This mod is a configurable _quality of live_ mod all around fire that lets you a
 
 ## Settings
 
-There are a few new settings in the *Mod Options*:
+There are several new settings in the *Mod Options*:
 
 - Torches
   - Worst Torch in Radial
