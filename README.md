@@ -9,7 +9,7 @@ This mod is a configurable _quality of live_ mod all around fire that lets you a
 
 ## Settings
 
-There are a few new settings in the *Mod Options*:
+There are several new settings in the *Mod Options*:
 
 - Torches
   - Worst Torch in Radial
