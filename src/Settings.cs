@@ -41,6 +41,19 @@ namespace FireImprovements
         [Description("If you want the game to automatically preselect the last used tinder.\n(Vanilla = false [Select the first item in the list])")]
         public bool remember_tinder = false;
 
+        [Name("Tinder Not Required Level")]
+        [Description("The level where tinder isn't required anymore. Won't get updated in the skill log page.\n(Vanilla = 3, 6 = Allways required)")]
+        [Slider(0, 6, 7)]
+        public int tinder_not_required_level = 3;
+
+        [Name("No Tinder Penalty")]
+        [Description("The fire start success penalty for using no tinder.\n(Vanilla = 0%)")]
+        public int no_tinder_penalty = 5;
+
+        [Name("        Penalty Level")]
+        [Description("This setting allows you to set a penalty multiplier per level below selected. E.g. if your current level is 3 and you chose level 5 your penalty will be (5 - 3) x selected penalty. If you are level 5 and select level 5 your penalty becomes 0.\n0 = Constant penalty on all levels,\n5 = No penalty at 5,\n6 = 1 x penalty at 5, etc.")]
+        [Slider(0, 10, 11)]
+        public int tinder_penalty_level_multiplier = 6;
         //* ----Fuel----
         [Section("Fuel")]
         [Name("Sort by Burn Duration")]
@@ -60,6 +73,12 @@ namespace FireImprovements
         [Name("Remember Last Accelerant")]
         [Description("If you want the game to automatically preselect the last used accelerant.\n(Vanilla = false [Select the first item in the list])")]
         public bool remember_accelerant = false;
+
+        //* ----Fire----
+        [Section("Fire")]
+        [Name("No More Fire Duration Boost")]
+        [Description("Fire burns longer when the player is outside in the cold. It doesn't matter where the fire is. This disables this mechanic.\n(Vanilla = false)")]
+        public bool no_more_fire_boost = false;
     }
 
     internal static class Fire_Settings

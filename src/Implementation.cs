@@ -170,6 +170,10 @@ namespace FireImprovements
         public static bool EqualLastTinder(GearItem gearItem)
         {
             if (gearItem && gearItem.m_GearName == LastTinderName) { return true; }
+            else if (!gearItem && LastTinderName == "")
+            {
+                return true;
+            }
             return false;
         }
         public static bool EqualLastFuel(GearItem gearItem)
@@ -219,6 +223,14 @@ namespace FireImprovements
         }
         public static int CompareTinderWeight(GearItem g1, GearItem g2)
         {
+            if (!g1)
+            {
+                return 1;
+            }
+            if (!g2)
+            {
+                return -1;
+            }
             float g1_weight = g1.m_WeightKG;
             float g2_weight = g2.m_WeightKG;
             if (g1_weight < g2_weight)
