@@ -66,8 +66,8 @@ There are several new settings in the *Mod Options*:
 
 ## Installation
 
-1. If you haven't done so already, install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) v0.2.7.4+
-2. If you haven't done so already, install [ModSettings](https://github.com/zeobviouslyfakeacc/ModSettings/releases) v1.7+
+1. If you haven't done so already, install [MelonLoader](https://github.com/LavaGang/MelonLoader/releases) v0.5+
+2. If you haven't done so already, install [ModSettings](https://github.com/zeobviouslyfakeacc/ModSettings/releases) v1.8+
 3. Download the latest version of `FireImprovements.dll` from the [releases](https://github.com/Remodor/TLD_FireImprovements/releases) page
 4. Move `FireImprovements.dll` into the *Mods* folder of your *The Long Dark* installation directory
 

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>0d794cc6-ed59-4514-9573-c5a6a71f399e</ProjectGuid>
+    <ProjectGuid>{0D794CC6-ED59-4514-9573-C5A6A71F399E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FireImprovements</RootNamespace>
@@ -40,8 +40,9 @@
     <Reference Include="Il2CppSystem">
       <Private>False</Private>
     </Reference>
-    <Reference Include="MelonLoader.ModHandler">
-      <Private>False</Private>
+    <Reference Include="MelonLoader, Version=0.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Steam\steamapps\common\TheLongDark\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnhollowerBaseLib">
@@ -59,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\*"/>
+    <Compile Include="src\*" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>

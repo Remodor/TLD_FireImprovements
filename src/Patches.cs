@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ namespace FireImprovements
             SetupScrollList = false;
         }
     }
-    [HarmonyPatch(typeof(Inventory), "GetBestMatches")]
+    [HarmonyPatch(typeof(Inventory), "GetBestMatches", new System.Type[] { })]
     internal class Inventory_GetBestMatches
     {
         internal static void Postfix(Inventory __instance, ref GearItem __result)
