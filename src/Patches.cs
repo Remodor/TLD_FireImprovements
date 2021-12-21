@@ -1,11 +1,12 @@
 ﻿using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
+using MelonLoader;
 using UnityEngine;
 
 namespace FireImprovements
 {
     using Settings = Fire_Settings;
-    //* Use lowest torch.
+    //* Use lowest torch. Use worst fire striker.
     [HarmonyPatch(typeof(Inventory), "GetHighestConditionGearThatMatchesName")]
     internal class Inventory_GetHighestConditionGearThatMatchesName
     {
@@ -14,31 +15,33 @@ namespace FireImprovements
             if (name == "GEAR_Torch" && Settings.Get().worst_torch_in_radial)
             {
                 __result = Utils.GetLowestConditionGearThatMatchesName(__instance.m_Items, name);
+            } else if (name == "GEAR_Firestriker" && Settings.Get().worst_firestriker)
+            {
+                __result = Utils.GetLowestConditionGearThatMatchesName(__instance.m_Items, name);
             }
         }
     }
-    //* Use worst matches to light torch.
-    [HarmonyPatch(typeof(Panel_TorchLight), "SetupScrollList")]
-    internal class Panel_TorchLight_SetupScrollList
+    //* Use lowest torch in quick access.
+    [HarmonyPatch(typeof(Utils), "GetBestTorch")]
+    internal class Utils_GetBestTorch
     {
-        internal static bool SetupScrollList = false;
-        internal static void Prefix()
+        internal static void Postfix(Inventory __instance, List<GearItemObject> items, ref GearItem __result)
         {
-            SetupScrollList = true;
-        }
-        internal static void Postfix()
-        {
-            SetupScrollList = false;
+            if (Settings.Get().worst_torch_quick_access)
+            {
+                __result = Implementation.GetWorstTorch(items);
+            }
         }
     }
-    [HarmonyPatch(typeof(Inventory), "GetBestMatches", new System.Type[] { })]
-    internal class Inventory_GetBestMatches
+    //* Use worst matches.
+    [HarmonyPatch(typeof(Inventory), "GetBestMatches", new System.Type[] { typeof(MatchesType) })]
+    internal class Inventory_GetBestMatchess
     {
-        internal static void Postfix(Inventory __instance, ref GearItem __result)
+        internal static void Postfix(Inventory __instance, MatchesType matchesType, ref GearItem __result)
         {
-            if (Panel_TorchLight_SetupScrollList.SetupScrollList && Settings.Get().worst_matches_for_torch)
+            if (Settings.Get().worst_matches)
             {
-                __result = Implementation.GetWorstMatches(__instance.m_Items);
+                __result = Implementation.GetWorstMatches(__instance.m_Items, matchesType);
             }
         }
     }
@@ -62,7 +65,7 @@ namespace FireImprovements
             }
         }
     }
-    //* Load last used fire ressource
+    //* Load last used fire resource
     [HarmonyPatch(typeof(Panel_FireStart), "Enable")]
     internal class Panel_FireStart_Enable
     {

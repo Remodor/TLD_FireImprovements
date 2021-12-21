@@ -15,9 +15,9 @@ There are several new settings in the *Mod Options*:
   - Worst Torch in Radial
 
     _Shows the worst torch in the radial menu instead of the best._
-  - Worst Matches to Light Torch
+  - Worst Torch From Quick Access
 
-    _Uses the worst matches to light a torch instead of the best._
+    _Uses the worst torch when pressing the quick access button._
 - Fire Starters
   - Sort by Igniting Chance
 
@@ -32,6 +32,17 @@ There are several new settings in the *Mod Options*:
   - Always Select Torches/ Flares First
 
     _If you want to always select burning torches/ flares first regardless of the sorting position or the last selected fire starter._
+  - Use Worst Firestriker
+
+    _If you want to always use the worst firestriker._
+  - Use Worst Matches
+
+    _If you want to always use the worst matches._
+  - Remove Duplicate Entries
+
+    _If you want to remove multiple entries on fire starting when you have e.g. multiple firestrikers. Only leaves the worst one._
+    
+    See [#4](/../../issues/4).
 - Tinder
   
     _Similar to fire starters._

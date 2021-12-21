@@ -10,9 +10,9 @@ namespace FireImprovements
         [Description("If you want to show the worst torch in the radial menu.\n(Vanilla = false [Best torch])")]
         public bool worst_torch_in_radial = false;
 
-        [Name("Worst Matches to Light Torch")]
-        [Description("If you want to use the worst matches to light a torch.\n(Vanilla = false [Best matches])")]
-        public bool worst_matches_for_torch = false;
+        [Name("Worst Torch From Quick Access")]
+        [Description("If you want to use the worst torch from pressing the quick access.\n(Vanilla = false [Best torch])")]
+        public bool worst_torch_quick_access = false;
 
         //* ----Fire Starters----
         [Section("Fire Starters")]
@@ -27,9 +27,22 @@ namespace FireImprovements
         [Name("Always Sort Torches/ Flares To First")]
         [Description("If you want to always sort burning torches/ flares to the first position regardless of the sorting order. This means torches/ flares are no longer in the usual sorting order for fire starters(e.g. sort after ignite chance).\n(Vanilla = false [Torches/ flares are sorted as usual items])")]
         public bool sort_torches_flares_first = false;
+
         [Name("Always Select Torches/ Flares First")]
         [Description("If you want to always select burning torches/ flares first regardless of the sorting position or the last selected fire starter.\n(Vanilla = false)")]
         public bool select_torches_flares_first = false;
+
+        [Name("Use Worst Firestriker")]
+        [Description("If you want to always use the worst firestriker.\n(Vanilla = false [Best firestriker])")]
+        public bool worst_firestriker = false;
+
+        [Name("Use Worst Matches")]
+        [Description("If you want to always use the worst matches.\n(Vanilla = false [Best matches])")]
+        public bool worst_matches = false;
+
+        [Name("Remove Duplicate Entries")]
+        [Description("If you want to remove multiple entries on fire starting when you have e.g. multiple firestrikers. Only leaves the worst one.\n(Vanilla = false [All Entries])")]
+        public bool remove_duplicate_entries = false;
 
         //* ----Tinder----
         [Section("Tinder")]
@@ -54,6 +67,7 @@ namespace FireImprovements
         [Description("This setting allows you to set a penalty multiplier per level below selected. E.g. if your current level is 3 and you chose level 5 your penalty will be (5 - 3) x selected penalty. If you are level 5 and select level 5 your penalty becomes 0.\n0 = Constant penalty on all levels,\n5 = No penalty at 5,\n6 = 1 x penalty at 5, etc.")]
         [Slider(0, 10, 11)]
         public int tinder_penalty_level_multiplier = 6;
+
         //* ----Fuel----
         [Section("Fuel")]
         [Name("Sort by Burn Duration")]
