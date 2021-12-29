@@ -73,7 +73,9 @@ namespace FireImprovements
         //* Fire Starters.
         internal static Comparison<GearItem> FireStarterIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersIgniteChance);
         internal static Comparison<GearItem> FireStarterTorchesFlaresFirstComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersTorchesFlaresFirst);
+        internal static Comparison<GameObject> TorchFireStarterComparison = new System.Func<GameObject, GameObject, int>(CompareFireStartersIgniteChanceWorstFirst);
         internal static Predicate<GearItem> TorchesOrFlaresPredicate = new System.Func<GearItem, bool>(IsTorchesOrFlares);
+        internal static Predicate<GearItem> MagLensPredicate = new System.Func<GearItem, bool>(IsMagLens);
         internal static Predicate<GearItem> FireStarterPredicate = new System.Func<GearItem, bool>(IsLastFireStarter);
         internal static Predicate<GearItem> EqualFireStarterPredicate = new System.Func<GearItem, bool>(EqualLastFireStarter);
         internal static void SortFireStarter(ref List<GearItem> items)
@@ -86,6 +88,7 @@ namespace FireImprovements
         {
             int index = -1;
             if (Settings.Get().select_torches_flares_first) { index = instance.m_StarterList.FindIndex(TorchesOrFlaresPredicate); }
+            if (Settings.Get().select_mag_lens_first && index == -1) { index = instance.m_StarterList.FindIndex(MagLensPredicate); }
             if (Settings.Get().remember_fire_starter && index == -1)
             {
                 index = instance.m_StarterList.FindIndex(FireStarterPredicate); // Find the last fire starter.
@@ -93,6 +96,10 @@ namespace FireImprovements
             }
             if (index == -1) { index = 0; }
             instance.m_SelectedStarterIndex = index;
+        }
+        internal static void SortTorchFireStarters(ref List<GameObject> items)
+        {
+            items.Sort(TorchFireStarterComparison);
         }
         //* Tinder.
         internal static Comparison<GearItem> TinderWeightComparison = new System.Func<GearItem, GearItem, int>(CompareTinderWeight);
@@ -214,6 +221,12 @@ namespace FireImprovements
             if (gearItem.m_TorchItem || gearItem.m_FlareItem) { return true; }
             return false;
         }
+        public static bool IsMagLens(GearItem gearItem)
+        {
+            if (gearItem.m_FireStarterItem.m_RequiresSunLight && InterfaceManager.m_Panel_FireStart.HasDirectSunlight()) {
+                return true; }
+            return false;
+        }
         public static bool IsLastFireStarter(GearItem gearItem)
         {
             if (gearItem && gearItem.m_InstanceID == LastFireStarterID) { return true; }
@@ -263,6 +276,20 @@ namespace FireImprovements
             else if (fireStarterItem1.m_FireStartSkillModifier > fireStarterItem2.m_FireStartSkillModifier)
             {
                 return -1; //g1 to the front
+            }
+            return 0;
+        }
+        public static int CompareFireStartersIgniteChanceWorstFirst(GameObject g1, GameObject g2)
+        {
+            FireStarterItem fireStarterItem1 = g1.GetComponent<FireStarterItem>();
+            FireStarterItem fireStarterItem2 = g2.GetComponent<FireStarterItem>();
+            if (fireStarterItem1.m_FireStartSkillModifier < fireStarterItem2.m_FireStartSkillModifier)
+            {
+                return -1; //g1 to the front
+            }
+            else if (fireStarterItem1.m_FireStartSkillModifier > fireStarterItem2.m_FireStartSkillModifier)
+            {
+                return 1; //g1 to the back
             }
             return 0;
         }

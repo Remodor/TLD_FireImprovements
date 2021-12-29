@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
-using MelonLoader;
 using UnityEngine;
 
 namespace FireImprovements
@@ -15,9 +14,11 @@ namespace FireImprovements
             if (name == "GEAR_Torch" && Settings.Get().worst_torch_in_radial)
             {
                 __result = Utils.GetLowestConditionGearThatMatchesName(__instance.m_Items, name);
+                return;
             } else if (name == "GEAR_Firestriker" && Settings.Get().worst_firestriker)
             {
                 __result = Utils.GetLowestConditionGearThatMatchesName(__instance.m_Items, name);
+                return;
             }
         }
     }
@@ -33,15 +34,28 @@ namespace FireImprovements
             }
         }
     }
-    //* Use worst matches.
+    //* Use worst matches. Sort torch starters.
     [HarmonyPatch(typeof(Inventory), "GetBestMatches", new System.Type[] { typeof(MatchesType) })]
     internal class Inventory_GetBestMatchess
     {
         internal static void Postfix(Inventory __instance, MatchesType matchesType, ref GearItem __result)
         {
+            if (Settings.Get().sort_torch_starter && InterfaceManager.m_Panel_TorchLight.IsEnabled())
+            {
+                if (matchesType == MatchesType.CardboardMatches)
+                {
+                    __result = Implementation.GetWorstMatches(__instance.m_Items, MatchesType.WoodMatches);
+                }
+                if (matchesType == MatchesType.WoodMatches)
+                {
+                    __result = Implementation.GetWorstMatches(__instance.m_Items, MatchesType.CardboardMatches);
+                }
+                return;
+            }
             if (Settings.Get().worst_matches)
             {
                 __result = Implementation.GetWorstMatches(__instance.m_Items, matchesType);
+                return;
             }
         }
     }

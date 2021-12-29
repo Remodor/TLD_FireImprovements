@@ -18,6 +18,9 @@ There are several new settings in the *Mod Options*:
   - Worst Torch From Quick Access
 
     _Uses the worst torch when pressing the quick access button._
+  - Sort Torch Starters
+  
+	_If you want to sort torch starters from worst to best._
 - Fire Starters
   - Sort by Igniting Chance
 
@@ -32,16 +35,19 @@ There are several new settings in the *Mod Options*:
   - Always Select Torches/ Flares First
 
     _If you want to always select burning torches/ flares first regardless of the sorting position or the last selected fire starter._
+  - Always Select Magnifying Lens First
+
+    _If you want to always select magnifying lens first regardless of the sorting position or the last selected fire starter. Will be overridden by lit torches/ flares._
   - Use Worst Firestriker
 
-    _If you want to always use the worst firestriker._
+    _If you want to always use the firestriker with the worst condition._
   - Use Worst Matches
 
-    _If you want to always use the worst matches._
+    _If you want to always use the matches with the worst condition._
   - Remove Duplicate Entries
 
     _If you want to remove multiple entries on fire starting when you have e.g. multiple firestrikers. Only leaves the worst one._
-    
+
     See [#4](/../../issues/4).
 - Tinder
   
@@ -55,7 +61,7 @@ There are several new settings in the *Mod Options*:
 
     _The fire start success penalty for using no tinder._
     - Penalty Level
-      
+
       _This setting allows you to set a penalty multiplier per level below selected. E.g. if your current level is 3 and you chose level 5 your penalty will be (5 - 3) x selected penalty. If you are level 5 and select level 5 your penalty becomes 0._
 
 - Fuel

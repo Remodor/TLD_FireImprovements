@@ -14,6 +14,10 @@ namespace FireImprovements
         [Description("If you want to use the worst torch from pressing the quick access.\n(Vanilla = false [Best torch])")]
         public bool worst_torch_quick_access = false;
 
+        [Name("Sort Torch Starters")]
+        [Description("If you want to sort torch starters from worst to best.\n(Vanilla = false [Mixed order])")]
+        public bool sort_torch_starter = false;
+
         //* ----Fire Starters----
         [Section("Fire Starters")]
         [Name("Sort by Igniting Chance")]
@@ -32,12 +36,16 @@ namespace FireImprovements
         [Description("If you want to always select burning torches/ flares first regardless of the sorting position or the last selected fire starter.\n(Vanilla = false)")]
         public bool select_torches_flares_first = false;
 
+        [Name("Always Select Magnifying Lens First")]
+        [Description("If you want to always select magnifying lens first regardless of the sorting position or the last selected fire starter. Will be overridden by lit torches/ flares.\n(Vanilla = false)")]
+        public bool select_mag_lens_first = false;
+
         [Name("Use Worst Firestriker")]
-        [Description("If you want to always use the worst firestriker.\n(Vanilla = false [Best firestriker])")]
+        [Description("If you want to always use the firestriker with the worst condition.\n(Vanilla = false [Best firestriker])")]
         public bool worst_firestriker = false;
 
         [Name("Use Worst Matches")]
-        [Description("If you want to always use the worst matches.\n(Vanilla = false [Best matches])")]
+        [Description("If you want to always use the matches with the worst condition.\n(Vanilla = false [Best matches])")]
         public bool worst_matches = false;
 
         [Name("Remove Duplicate Entries")]
