@@ -229,7 +229,13 @@ namespace FireImprovements
         }
         public static bool IsLastFireStarter(GearItem gearItem)
         {
-            if (gearItem && gearItem.m_InstanceID == LastFireStarterID) { return true; }
+            if (gearItem && gearItem.m_InstanceID == LastFireStarterID) { 
+                if (gearItem.m_FireStarterItem && gearItem.m_FireStarterItem.m_RequiresSunLight)
+                {
+                    return InterfaceManager.m_Panel_FireStart.HasDirectSunlight();
+                }
+                return true; 
+            }
             return false;
         }
         public static bool EqualLastFireStarter(GearItem gearItem)

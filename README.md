@@ -21,6 +21,9 @@ There are several new settings in the *Mod Options*:
   - Sort Torch Starters
   
 	_If you want to sort torch starters from worst to best._
+  - Turn Off 0 Heat Fires
+  
+    _When taking torches fires can reach 0 heat. Enabling this will extinguish the fire._
 - Fire Starters
   - Sort by Igniting Chance
 

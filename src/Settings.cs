@@ -18,6 +18,10 @@ namespace FireImprovements
         [Description("If you want to sort torch starters from worst to best.\n(Vanilla = false [Mixed order])")]
         public bool sort_torch_starter = false;
 
+        [Name("Turn Off 0 Heat Fires")]
+        [Description("When taking torches fires can reach 0 heat. Enabling this will extinguish the fire.\n(Vanilla = false)")]
+        public bool turn_off_0_heat_fires = false;
+
         //* ----Fire Starters----
         [Section("Fire Starters")]
         [Name("Sort by Igniting Chance")]

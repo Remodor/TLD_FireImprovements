@@ -59,6 +59,18 @@ namespace FireImprovements
             }
         }
     }
+    //* Turn off 0 heat fires.
+    [HarmonyPatch(typeof(Panel_FeedFire), "OnTakeTorch")]
+    internal class Panel_FeedFire_OnTakeTorch
+    {
+        internal static void Postfix(Panel_FeedFire  __instance)
+        {
+            if (Settings.Get().turn_off_0_heat_fires && __instance.m_Fire.m_FuelHeatIncrease <= 0.1f)
+            {
+                __instance.m_Fire.m_ElapsedOnTODSeconds = __instance.m_Fire.m_MaxOnTODSeconds;
+            }
+        }
+    }
     //* Sort fire resource lists
     [HarmonyPatch(typeof(Panel_FireStart), "RefreshList")]
     internal class Panel_FireStart_RefreshList
