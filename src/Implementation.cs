@@ -234,13 +234,19 @@ namespace FireImprovements
                 {
                     return InterfaceManager.m_Panel_FireStart.HasDirectSunlight();
                 }
-                return true; 
+                return true;
             }
             return false;
         }
         public static bool EqualLastFireStarter(GearItem gearItem)
         {
-            if (gearItem && gearItem.m_GearName == LastFireStarterName) { return true; }
+            if (gearItem && gearItem.m_GearName == LastFireStarterName) {
+                if (gearItem.m_FireStarterItem && gearItem.m_FireStarterItem.m_RequiresSunLight)
+                {
+                    return InterfaceManager.m_Panel_FireStart.HasDirectSunlight();
+                }
+                return true; 
+            }
             return false;
         }
         public static bool EqualLastTinder(GearItem gearItem)
