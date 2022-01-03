@@ -24,6 +24,10 @@ There are several new settings in the *Mod Options*:
   - Turn Off 0 Heat Fires
   
     _When taking torches fires can reach 0 heat. Enabling this will extinguish the fire._
+  - Restore Lit Torches
+  
+    *When changing location the carried torch sometimes is extinguished. This will restore its previous state.*
+
 - Fire Starters
   - Sort by Igniting Chance
 

@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
+using MelonLoader;
 using UnityEngine;
 
 namespace FireImprovements
@@ -150,6 +151,37 @@ namespace FireImprovements
                 return false;
             }
             return true;
+        }
+    }
+    //* Save fire state
+    [HarmonyPatch(typeof(LoadScene), "LoadLevelWhenFadeOutComplete")]
+    internal class LoadScene_Load
+    {
+        internal static bool carriedLitTorch = false;
+        internal static void Prefix()
+        {
+            GearItem itemInHands = GameManager.GetPlayerManagerComponent().m_ItemInHands;
+            if (itemInHands && itemInHands.IsLitTorch())
+            {
+                carriedLitTorch = true;
+            } else
+            {
+                carriedLitTorch = false;
+            }
+        }
+    }
+    [HarmonyPatch(typeof(SaveGameSystem), "LoadSceneData", new System.Type[] { typeof(string), typeof(string) })]
+    internal class LoadSceneData_Load
+    {
+        public static void Postfix(SaveGameSystem __instance, string name, string sceneSaveName)
+        {
+            GearItem itemInHands = GameManager.GetPlayerManagerComponent().m_ItemInHands;
+            if (Settings.Get().restore_lit_torch && itemInHands && itemInHands.m_TorchItem 
+                && LoadScene_Load.carriedLitTorch && !itemInHands.IsLitTorch())
+            {
+                MelonLogger.Log("Restored lit torch!");
+                itemInHands.m_TorchItem.m_State = TorchState.Burning;
+            }
         }
     }
 }

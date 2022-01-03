@@ -22,6 +22,10 @@ namespace FireImprovements
         [Description("When taking torches fires can reach 0 heat. Enabling this will extinguish the fire.\n(Vanilla = false)")]
         public bool turn_off_0_heat_fires = false;
 
+        [Name("Restore Lit Torches")]
+        [Description("When changing location the carried torch sometimes is extinguished. This will restore its previous state.\n(Vanilla = false)")]
+        public bool restore_lit_torch = false;
+
         //* ----Fire Starters----
         [Section("Fire Starters")]
         [Name("Sort by Igniting Chance")]
