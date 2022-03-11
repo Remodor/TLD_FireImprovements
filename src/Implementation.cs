@@ -8,11 +8,48 @@ namespace FireImprovements
     using Settings = Fire_Settings;
     public class Implementation : MelonMod
     {
+        private static Comparison<GearItem> FireStarterIgniteChanceComparison;
+        private static Comparison<GearItem> FireStarterTorchesFlaresFirstComparison;
+        private static Comparison<GameObject> TorchFireStarterComparison;
+        private static Predicate<GearItem> TorchesOrFlaresPredicate;
+        private static Predicate<GearItem> MagLensPredicate;
+        private static Predicate<GearItem> FireStarterPredicate;
+        private static Predicate<GearItem> EqualFireStarterPredicate;
+
+        private static Comparison<GearItem> FuelBurnDurationComparison;
+        private static Comparison<GearItem> FuelIgniteChanceComparison;
+        private static Comparison<GearItem> FuelBurnDurationAndIgniteChanceComparison;
+        private static Predicate<GearItem> FuelPredicate;
+
+        private static Predicate<GearItem> AccelerantPredicate;
+
+        private static Comparison<GearItem> TinderWeightComparison;
+        private static Predicate<GearItem> TinderPredicate;
+
         public override void OnApplicationStart()
         {
+            FireStarterIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersIgniteChance);
+            FireStarterTorchesFlaresFirstComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersTorchesFlaresFirst);
+            TorchFireStarterComparison = new System.Func<GameObject, GameObject, int>(CompareFireStartersIgniteChanceWorstFirst);
+            TorchesOrFlaresPredicate = new System.Func<GearItem, bool>(IsTorchesOrFlares);
+            MagLensPredicate = new System.Func<GearItem, bool>(IsMagLens);
+            FireStarterPredicate = new System.Func<GearItem, bool>(IsLastFireStarter);
+            EqualFireStarterPredicate = new System.Func<GearItem, bool>(EqualLastFireStarter);
+
+            FuelBurnDurationComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDuration);
+            FuelIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelIgniteChance);
+            FuelBurnDurationAndIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDurationAndIgniteChance);
+            FuelPredicate = new System.Func<GearItem, bool>(EqualLastFuel);
+
+            AccelerantPredicate = new System.Func<GearItem, bool>(EqualLastAccelerant);
+
+            TinderWeightComparison = new System.Func<GearItem, GearItem, int>(CompareTinderWeight);
+            TinderPredicate = new System.Func<GearItem, bool>(EqualLastTinder);
+
             Debug.Log($"[{Info.Name}] version {Info.Version} loaded!");
             Settings.OnLoad();
         }
+
         //* Same as games GetBestMatches only reverse.
         internal static GearItem GetWorstMatches(List<GearItemObject> items, MatchesType matchesType)
         {
@@ -71,13 +108,6 @@ namespace FireImprovements
             return gearItem;
         }
         //* Fire Starters.
-        internal static Comparison<GearItem> FireStarterIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersIgniteChance);
-        internal static Comparison<GearItem> FireStarterTorchesFlaresFirstComparison = new System.Func<GearItem, GearItem, int>(CompareFireStartersTorchesFlaresFirst);
-        internal static Comparison<GameObject> TorchFireStarterComparison = new System.Func<GameObject, GameObject, int>(CompareFireStartersIgniteChanceWorstFirst);
-        internal static Predicate<GearItem> TorchesOrFlaresPredicate = new System.Func<GearItem, bool>(IsTorchesOrFlares);
-        internal static Predicate<GearItem> MagLensPredicate = new System.Func<GearItem, bool>(IsMagLens);
-        internal static Predicate<GearItem> FireStarterPredicate = new System.Func<GearItem, bool>(IsLastFireStarter);
-        internal static Predicate<GearItem> EqualFireStarterPredicate = new System.Func<GearItem, bool>(EqualLastFireStarter);
         internal static void SortFireStarter(ref List<GearItem> items)
         {
             if (Settings.Get().remove_duplicate_entries) { RemoveDuplicateItems(items); }
@@ -102,8 +132,6 @@ namespace FireImprovements
             items.Sort(TorchFireStarterComparison);
         }
         //* Tinder.
-        internal static Comparison<GearItem> TinderWeightComparison = new System.Func<GearItem, GearItem, int>(CompareTinderWeight);
-        internal static Predicate<GearItem> TinderPredicate = new System.Func<GearItem, bool>(EqualLastTinder);
         internal static void SortTinder(ref List<GearItem> items)
         {
             if (Settings.Get().sort_tinder_by_weight) { items.Sort(TinderWeightComparison); }
@@ -116,11 +144,8 @@ namespace FireImprovements
             instance.m_SelectedTinderIndex = index;
         }
         //* Fuel.
-        internal static Comparison<GearItem> FuelBurnDurationComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDuration);
-        internal static Comparison<GearItem> FuelIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelIgniteChance);
-        internal static Comparison<GearItem> FuelBurnDurationAndIgniteChanceComparison = new System.Func<GearItem, GearItem, int>(CompareFuelBurnDurationAndIgniteChance);
 
-        internal static Predicate<GearItem> FuelPredicate = new System.Func<GearItem, bool>(EqualLastFuel);
+
         internal static void SortFuel(ref List<GearItem> items)
         {
             if (Settings.Get().sort_fuel_by_burn_duration && Settings.Get().sort_fuel_by_ignite_chance)
@@ -138,7 +163,6 @@ namespace FireImprovements
             instance.m_SelectedFuelIndex = index;
         }
         //* Accelerant.
-        internal static Predicate<GearItem> AccelerantPredicate = new System.Func<GearItem, bool>(EqualLastAccelerant);
         internal static void SelectAccelerant(Panel_FireStart instance)
         {
             int index = -1;
@@ -147,11 +171,11 @@ namespace FireImprovements
             instance.m_SelectedAccelerantIndex = index;
         }
         //* Save fire resources.
-        internal static int LastFireStarterID = -1;
-        internal static String LastFireStarterName = "";
-        internal static String LastTinderName = "";
-        internal static String LastFuelName = "";
-        internal static String LastAccelerantName = "";
+        private static int LastFireStarterID = -1;
+        private static String LastFireStarterName = "";
+        private static String LastTinderName = "";
+        private static String LastFuelName = "";
+        private static String LastAccelerantName = "";
         internal static void SaveLastUsedFireRessources(Panel_FireStart instance)
 
         {

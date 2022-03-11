@@ -26,6 +26,10 @@ namespace FireImprovements
         [Description("When changing location the carried torch sometimes is extinguished. This will restore its previous state.\n(Vanilla = false)")]
         public bool restore_lit_torch = false;
 
+        [Name("No Auto Use Lighter")]
+        [Description("When lighting a torch and only one lighter is available, it is selected automatically. It is possible to accidentally waste a lighter this way. With this option enabled you need to select a lighter, even if only one lighter is available.\n(Vanilla = false)")]
+        public bool no_auto_use_torch_lighter = false;
+
         //* ----Fire Starters----
         [Section("Fire Starters")]
         [Name("Sort by Igniting Chance")]

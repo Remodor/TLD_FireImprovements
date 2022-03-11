@@ -35,6 +35,36 @@ namespace FireImprovements
             }
         }
     }
+    //* Don't light torch with one starter.
+    [HarmonyPatch(typeof(Panel_TorchLight), "OnUseSelectedItem")]
+    internal class Panel_TorchLight_OnUseSelectedItem
+    {
+        internal static bool Prefix(Panel_TorchLight __instance)
+        {
+            if (Settings.Get().no_auto_use_torch_lighter && __instance.m_ScrollList.m_ScrollObjects.Count == 1
+                && Panel_TorchLight_Enable.enable)
+            {
+                __instance.RefreshVisuals();
+                Input.ResetInputAxes();
+                Panel_TorchLight_Enable.enable = false;
+                return false;
+            }
+            return true;
+        }
+    }
+    [HarmonyPatch(typeof(Panel_TorchLight), "Enable")]
+    internal class Panel_TorchLight_Enable
+    {
+        internal static bool enable = false;
+        internal static void Prefix()
+        {
+            enable = true;
+        }
+        internal static void Postfix()
+        {
+            enable = false;
+        }
+    }
     //* Use worst matches. Sort torch starters.
     [HarmonyPatch(typeof(Inventory), "GetBestMatches", new System.Type[] { typeof(MatchesType) })]
     internal class Inventory_GetBestMatchess
@@ -173,13 +203,13 @@ namespace FireImprovements
     [HarmonyPatch(typeof(SaveGameSystem), "LoadSceneData", new System.Type[] { typeof(string), typeof(string) })]
     internal class LoadSceneData_Load
     {
-        public static void Postfix(SaveGameSystem __instance, string name, string sceneSaveName)
+        public static void Postfix()
         {
             GearItem itemInHands = GameManager.GetPlayerManagerComponent().m_ItemInHands;
             if (Settings.Get().restore_lit_torch && itemInHands && itemInHands.m_TorchItem 
                 && LoadScene_Load.carriedLitTorch && !itemInHands.IsLitTorch())
             {
-                MelonLogger.Log("Restored lit torch!");
+                MelonLogger.Msg("Restored lit torch!");
                 itemInHands.m_TorchItem.m_State = TorchState.Burning;
             }
         }
